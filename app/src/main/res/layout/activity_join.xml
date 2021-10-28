@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/alert_white_border"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:text="아이디 입력"
+        android:textColor="@color/deepskyblue" />
+
+    <EditText
+        android:id="@+id/editId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txtPasswd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:text="비밀번호 입력"
+        android:textColor="@color/deepskyblue" />
+
+    <EditText
+        android:id="@+id/editPasswd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:id="@+id/rgGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_weight="3.5"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rbUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="고객"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/rbMarket"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="마켓"
+            android:textSize="12sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/txtMcode"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:text="마트코드 입력"
+        android:textColor="@color/deepskyblue"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:id="@+id/editMcode"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="  코드 6자리 입력"
+        android:visibility="invisible"/>
+
+</LinearLayout>

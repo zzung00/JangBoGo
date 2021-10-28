@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/deepskyblue"
+        android:layout_marginLeft="65dp"
+        android:layout_marginTop="200dp"
+        android:text="결제 완료"
+        android:textSize="60dp"
+        android:fontFamily="@font/b"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="100dp"
+        android:text="주문내역을 확인하시겠습니까?" />
+
+</LinearLayout>
