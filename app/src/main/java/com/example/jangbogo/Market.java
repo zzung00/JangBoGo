@@ -5,12 +5,16 @@ public class Market {
     private String name;
     private double lat;
     private double lng;
+    private String operHour;
+    private String tel;
 
-    public Market(Integer id, String name, double lat, double lng) {
+    public Market(Integer id, String name, double lat, double lng, String operHour, String tel) {
         this.id = id;
         this.name = name;
         this.lat = lat;
         this.lng = lng;
+        this.operHour = operHour;
+        this.tel = tel;
     }
 
     public void setId(Integer id) {
@@ -43,5 +47,21 @@ public class Market {
 
     public double getLng() {
         return lng;
+    }
+
+    public void setOperHour(String operHour) {
+        this.operHour = operHour;
+    }
+
+    public String getOperHour() {
+        return operHour;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getTel() {
+        return tel;
     }
 }

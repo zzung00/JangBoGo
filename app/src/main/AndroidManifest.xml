@@ -8,13 +8,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.JangBoGo">
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBTm5X0wDUSk9fUl-Xrff24hfzQaszzArY" />
 
-        <activity android:name=".LoadActivity">
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,5 +32,5 @@
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

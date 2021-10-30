@@ -12,7 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,14 +31,23 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     private GoogleMap map;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted;
     private FusedLocationProviderClient fusedLocationClient;
-    private ArrayList<Market> markets = new ArrayList<>();
+    private HashMap<String, Market> markets = new HashMap<>();
+    private Retrofit retrofit;
+    private JangBoGoService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +69,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        //테스트(서버에서 불러오면 사라질 코드...)
-        markets.add(new Market(0, "복마트", 35.96262, 126.98775));
-        markets.add(new Market(1, "자유마트", 35.96135, 126.98487));
-        markets.add(new Market(2, "엑스마트", 35.95808, 126.98760));
+        retrofit = new Retrofit.Builder().baseUrl("http://172.30.1.9/").addConverterFactory(GsonConverterFactory.create()).build();
+        service = retrofit.create(JangBoGoService.class);
+
+        Call<List<Market>> call = service.listAllMarket();
+        call.enqueue(new Callback<List<Market>>() {
+            @Override
+            public void onResponse(Call<List<Market>> call, Response<List<Market>> response) {
+                if (response.isSuccessful()) {
+                    List<Market> res = response.body();
+                    for (int i = 0; i < res.size(); i++) {
+                        markets.put("m"+i, res.get(i));
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.title(res.get(i).getName());
+                        markerOptions.position(new LatLng(res.get(i).getLat(), res.get(i).getLng()));
+                        map.addMarker(markerOptions);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Market>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -73,12 +103,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         map.moveCamera(CameraUpdateFactory.zoomTo(17));
         map.setOnMarkerClickListener(this);
 
-        for (int i = 0; i < markets.size(); i++) {
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.title(markets.get(i).getName());
-            markerOptions.position(new LatLng(markets.get(i).getLat(), markets.get(i).getLng()));
-            map.addMarker(markerOptions);
-        }
 
     }
 
@@ -96,12 +120,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
-        showDialog();
-
+        showDialog(marker.getId());
         return false;
     }
 
-    private void showDialog() {
+    private void showDialog(String id) {
+        Market market = markets.get(id);
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.activity_dialog);
@@ -109,8 +133,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setGravity(Gravity.BOTTOM);
         dialog.show();
-        Button btnGoMarket;
-        btnGoMarket = dialog.findViewById(R.id.btnGoMarket);
+        Button btnGoMarket = dialog.findViewById(R.id.btnGoMarket);
+        TextView txtMarketName = dialog.findViewById(R.id.txtMarket);
+        txtMarketName.setText(market.getName());
+        TextView txtOperHour = dialog.findViewById(R.id.txtOperHour);
+        txtOperHour.setText(market.getOperHour());
+
 
         btnGoMarket.setOnClickListener(new View.OnClickListener() {
             @Override
