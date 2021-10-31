@@ -14,4 +14,9 @@
         android:fontStyle = "normal"
         android:fontWeight = "400"
         android:font = "@font/m" />
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/surround"/>
 </font-family>

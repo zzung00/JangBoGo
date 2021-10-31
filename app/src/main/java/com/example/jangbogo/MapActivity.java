@@ -69,7 +69,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        retrofit = new Retrofit.Builder().baseUrl("http://172.30.1.9/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://172.20.10.3/").addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(JangBoGoService.class);
 
         Call<List<Market>> call = service.listAllMarket();
@@ -135,9 +135,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         dialog.show();
         Button btnGoMarket = dialog.findViewById(R.id.btnGoMarket);
         TextView txtMarketName = dialog.findViewById(R.id.txtMarket);
-        txtMarketName.setText(market.getName());
         TextView txtOperHour = dialog.findViewById(R.id.txtOperHour);
+        TextView txtTel = dialog.findViewById(R.id.txtTel);
+        TextView txtAddress = dialog.findViewById(R.id.txtAddress);
+        txtMarketName.setText(market.getName());
         txtOperHour.setText(market.getOperHour());
+        txtTel.setText(market.getTel());
+        txtAddress.setText(market.getAddress());
 
 
         btnGoMarket.setOnClickListener(new View.OnClickListener() {
