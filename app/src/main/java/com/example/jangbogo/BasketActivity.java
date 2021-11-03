@@ -29,8 +29,7 @@ public class BasketActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MarketActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }

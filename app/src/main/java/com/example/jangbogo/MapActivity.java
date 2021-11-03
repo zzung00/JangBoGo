@@ -69,7 +69,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        retrofit = new Retrofit.Builder().baseUrl("http://172.20.10.3/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(JangBoGoService.class);
 
         Call<List<Market>> call = service.listAllMarket();
@@ -148,6 +148,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MarketActivity.class);
+                intent.putExtra("name", market.getName());
                 startActivity(intent);
             }
         });
