@@ -148,7 +148,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MarketActivity.class);
-                intent.putExtra("name", market.getName());
+                intent.putExtra("market", market);
                 startActivity(intent);
             }
         });

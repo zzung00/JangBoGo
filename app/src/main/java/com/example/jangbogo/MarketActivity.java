@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -31,9 +31,10 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
     private ImageButton btnCart;
     private ImageButton btnBack;
     private ColorStateList def;
-    private List<Stock> stocks = new ArrayList<>();
     private Retrofit retrofit;
     private JangBoGoService service;
+    private List<Stock> stocks = new ArrayList<>();
+    private Market market;
     private RecyclerView recyclerView;
     private StockAdapter stockAdapter;
 
@@ -42,30 +43,13 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market);
 
-        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create()).build();
-        service = retrofit.create(JangBoGoService.class);
-        Call<List<Stock>> call = service.loadAllStockByMarketId();
-        call.enqueue(new Callback<List<Stock>>() {
-            @Override
-            public void onResponse(Call<List<Stock>> call, Response<List<Stock>> response) {
-                if (response.isSuccessful()) {
-                    List<Stock> res = response.body();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Stock>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        market = getIntent().getParcelableExtra("market");
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-        stocks.add(new Stock(1, 3400, 2, new Product(1, "콜라", new Category(1, "음료"))));
         stockAdapter = new StockAdapter(getApplicationContext(), stocks);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setAdapter(stockAdapter);
         marketName = findViewById(R.id.marketName);
-        marketName.setText(getIntent().getStringExtra("name"));
+        marketName.setText(market.getName());
         item1 = findViewById(R.id.item1);
         item2 = findViewById(R.id.item2);
         item3 = findViewById(R.id.item3);
@@ -92,6 +76,25 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                 finish();
             }
         });
+
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create()).build();
+        service = retrofit.create(JangBoGoService.class);
+        Call<List<Stock>> call = service.loadAllStockByMarketId(market.getId());
+        call.enqueue(new Callback<List<Stock>>() {
+            @Override
+            public void onResponse(Call<List<Stock>> call, Response<List<Stock>> response) {
+                if (response.isSuccessful()) {
+                    List<Stock> res = response.body();
+                    stocks.addAll(res);
+                    stockAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Stock>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -101,18 +104,21 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
             item1.setTextColor(Color.WHITE);
             item2.setTextColor(Color.BLACK);
             item3.setTextColor(Color.BLACK);
+            stockAdapter.getFilter().filter("");
         } else if (view.getId() == R.id.item2){
             item1.setTextColor(Color.BLACK);
             item2.setTextColor(Color.WHITE);
             item3.setTextColor(Color.BLACK);
             int size = item2.getWidth();
             select.animate().x(size).setDuration(100);
+            stockAdapter.getFilter().filter("음료");
         } else if (view.getId() == R.id.item3){
             item1.setTextColor(Color.BLACK);
             item3.setTextColor(Color.WHITE);
             item2.setTextColor(Color.BLACK);
             int size = item2.getWidth() * 2;
             select.animate().x(size).setDuration(100);
+            stockAdapter.getFilter().filter("스낵");
         }
     }
 
