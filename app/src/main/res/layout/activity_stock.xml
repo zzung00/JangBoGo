@@ -10,12 +10,14 @@
         android:id="@+id/stockImg"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_gravity="center"
         android:src="@drawable/ic_baseline_call_24"/>
 
     <TextView
         android:id="@+id/stockName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginBottom="8dp"
         android:text="코카콜라"
         android:textSize="12dp"/>
@@ -24,7 +26,7 @@
         android:id="@+id/stockPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
+        android:layout_gravity="center"
         android:text="3400원"
         android:textSize="18dp"/>
 
