@@ -26,7 +26,7 @@
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".MapActivity"></activity>
         <activity android:name=".MarketActivity"></activity>
-        <activity android:name=".BasketActivity"></activity>
+        <activity android:name=".CartActivity"></activity>
         <activity android:name=".PaymentActivity"></activity>
 
     </application>

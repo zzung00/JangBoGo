@@ -7,13 +7,13 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class BasketActivity extends AppCompatActivity {
+public class CartActivity extends AppCompatActivity {
     private Button btnPay, btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_basket);
+        setContentView(R.layout.activity_cart);
 
         btnPay = findViewById(R.id.btnPayment);
         btnBack = findViewById(R.id.btnBack2);

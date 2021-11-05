@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,7 +71,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
         btnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), BasketActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CartActivity.class);
                 startActivity(intent);
 
             }
@@ -125,6 +126,14 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                         editCount.setText(num+"");
                     }
                 });
+
+                btnPut.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                        showDialog();
+                    }
+                });
             }
         });
 
@@ -147,6 +156,16 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public  void showDialog() {
+        Dialog dialog = new Dialog(MarketActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.activity_success_putting_dialog);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, 400);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().setGravity(Gravity.CENTER_VERTICAL);
+        dialog.show();
     }
 
     @Override
