@@ -55,7 +55,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
         return stockFilter;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView stockImg;
         TextView stockName, stockPrice;
 
@@ -65,10 +65,32 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
             stockName = itemView.findViewById(R.id.stockName);
             stockPrice = itemView.findViewById(R.id.stockPrice);
 
+            stockImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Stock stock = filterList.get(position);
+                        if (listener != null) {
+                            listener.onItemClick(v, position);
+                        }
+                    }
+                }
+            });
         }
     }
 
-    class StockFilter extends Filter {
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListener listener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public class StockFilter extends Filter {
 
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {

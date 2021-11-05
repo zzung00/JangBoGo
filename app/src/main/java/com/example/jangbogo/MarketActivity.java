@@ -8,8 +8,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,6 +83,38 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
             }
         });
 
+        stockAdapter.setOnItemClickListener(new StockAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Dialog dialog = new Dialog(MarketActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.activity_inform_purchase_dialog);
+                dialog.getWindow().setLayout(900, 540);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.getWindow().setGravity(Gravity.CENTER_VERTICAL);
+                dialog.show();
+                Button btnAdd = dialog.findViewById(R.id.btnAdd);
+                Button btnSub = dialog.findViewById(R.id.btnSub);
+                Button btnCancle = dialog.findViewById(R.id.btnCancle);
+                Button btnPut = dialog.findViewById(R.id.btnPut);
+                EditText editCount = dialog.findViewById(R.id.editCount);
+
+                btnCancle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+                btnAdd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
+        });
+
 
         retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(JangBoGoService.class);
@@ -126,16 +159,6 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
             select.animate().x(size).setDuration(100);
             stockAdapter.getFilter().filter("스낵");
         }
-    }
-
-    public void showDialog() {
-        Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.activity_inform_purchase_dialog);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, 700);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().setGravity(Gravity.CENTER);
-        dialog.show();
     }
 
 }
