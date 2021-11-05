@@ -84,6 +84,8 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
         });
 
         stockAdapter.setOnItemClickListener(new StockAdapter.OnItemClickListener() {
+            int num = 1;
+
             @Override
             public void onItemClick(View v, int position) {
                 Dialog dialog = new Dialog(MarketActivity.this);
@@ -98,18 +100,29 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                 Button btnCancle = dialog.findViewById(R.id.btnCancle);
                 Button btnPut = dialog.findViewById(R.id.btnPut);
                 EditText editCount = dialog.findViewById(R.id.editCount);
+                editCount.setText(num+"");
 
                 btnCancle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.cancel();
+                        num = 1;
                     }
                 });
 
                 btnAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        num++;
+                        editCount.setText(num+"");
+                    }
+                });
 
+                btnSub.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        num--;
+                        editCount.setText(num+"");
                     }
                 });
             }
