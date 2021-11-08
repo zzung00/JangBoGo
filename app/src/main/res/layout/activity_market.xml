@@ -16,6 +16,7 @@
         android:padding="5dp"
         android:text="Market"
         android:textSize="25dp"
+        android:textColor="@color/deepskyblue"
         android:textStyle="bold" />
 
     <com.google.android.material.appbar.AppBarLayout

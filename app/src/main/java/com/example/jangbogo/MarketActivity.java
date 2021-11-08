@@ -116,6 +116,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                     public void onClick(View v) {
                         num++;
                         editCount.setText(num+"");
+                        //서버에 저장된 개수까지만(초과시 경고메시지)
                     }
                 });
 
@@ -131,6 +132,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                     @Override
                     public void onClick(View v) {
                         dialog.cancel();
+                        num = 1;
                         showDialog();
                     }
                 });
@@ -138,7 +140,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
         });
 
 
-        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.25.8/").addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(JangBoGoService.class);
         Call<List<Stock>> call = service.loadAllStockByMarketId(market.getId());
         call.enqueue(new Callback<List<Stock>>() {
@@ -166,6 +168,24 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setGravity(Gravity.CENTER_VERTICAL);
         dialog.show();
+        TextView txtContinue = dialog.findViewById(R.id.txtContinue);
+        TextView txtGoCart = dialog.findViewById(R.id.txtGoCart);
+
+        txtContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        txtGoCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+                startActivity(intent);
+                dialog.cancel();
+            }
+        });
     }
 
     @Override
