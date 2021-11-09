@@ -116,7 +116,6 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                     public void onClick(View v) {
                         num++;
                         editCount.setText(num+"");
-                        //서버에 저장된 개수까지만(초과시 경고메시지)
                     }
                 });
 
@@ -131,16 +130,21 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                 btnPut.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.cancel();
-                        num = 1;
-                        showDialog();
+                        if (stockAdapter.getItemCount() < Integer.parseInt(editCount.getText().toString())) {
+                            showOverDialog();
+                            dialog.show();
+                        } else {
+                            dialog.cancel();
+                            num = 1;
+                            showDialog();
+                        }
                     }
                 });
             }
         });
 
 
-        retrofit = new Retrofit.Builder().baseUrl("http://192.168.25.8/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(JangBoGoService.class);
         Call<List<Stock>> call = service.loadAllStockByMarketId(market.getId());
         call.enqueue(new Callback<List<Stock>>() {
@@ -188,6 +192,24 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
         });
     }
 
+    public void showOverDialog() {
+        Dialog dialog = new Dialog(MarketActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.activity_overcount_dialog);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, 400);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().setGravity(Gravity.CENTER_VERTICAL);
+        dialog.show();
+        TextView txtRePut = dialog.findViewById(R.id.txtRePut);
+
+        txtRePut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.item1){
@@ -209,7 +231,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
             item2.setTextColor(Color.BLACK);
             int size = item2.getWidth() * 2;
             select.animate().x(size).setDuration(100);
-            stockAdapter.getFilter().filter("스낵");
+            stockAdapter.getFilter().filter("채소");
         }
     }
 

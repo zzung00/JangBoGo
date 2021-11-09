@@ -6,9 +6,17 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CartActivity extends AppCompatActivity {
     private Button btnPay, btnBack;
+    private RecyclerView recyclerView;
+    private CartAdapter cartAdapter;
+    private List<Stock> cartList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +25,9 @@ public class CartActivity extends AppCompatActivity {
 
         btnPay = findViewById(R.id.btnPayment);
         btnBack = findViewById(R.id.btnBack2);
+        recyclerView = (RecyclerView)findViewById(R.id.cartRecyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(cartAdapter);
 
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,5 +43,10 @@ public class CartActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public interface itemTouchListener {
+        boolean onItemMove(int position, int toPosition);
+        void onItemSwipe(int position);
     }
 }

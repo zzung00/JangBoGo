@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtListName" />
 
     <TextView
-        android:id="@+id/txttotal"
+        android:id="@+id/txtTotal"
         android:layout_width="65dp"
         android:layout_height="23dp"
         android:layout_marginStart="8dp"
