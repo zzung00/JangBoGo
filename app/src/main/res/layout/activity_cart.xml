@@ -23,7 +23,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cartRecyclerview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="350dp"
             android:layout_marginTop="30dp">
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -36,7 +36,7 @@
                 android:id="@+id/btnPayment"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="500dp"
+                android:layout_marginTop="200dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
@@ -47,7 +47,7 @@
                 android:id="@+id/btnBack2"
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="500dp"
+                android:layout_marginTop="200dp"
                 android:gravity="center"
                 android:backgroundTint="@color/white"
                 android:text="뒤로가기"

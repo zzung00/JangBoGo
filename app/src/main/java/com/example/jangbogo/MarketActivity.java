@@ -44,6 +44,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
     private Market market;
     private RecyclerView recyclerView;
     private StockAdapter stockAdapter;
+    private ArrayList<CartItem> cartItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +52,12 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
         setContentView(R.layout.activity_market);
 
         market = getIntent().getParcelableExtra("market");
+        marketName = findViewById(R.id.marketName);
+        marketName.setText(market.getName());
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         stockAdapter = new StockAdapter(getApplicationContext(), stocks);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setAdapter(stockAdapter);
-        marketName = findViewById(R.id.marketName);
-        marketName.setText(market.getName());
         item1 = findViewById(R.id.item1);
         item2 = findViewById(R.id.item2);
         item3 = findViewById(R.id.item3);
@@ -130,7 +131,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                 btnPut.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (stockAdapter.getItemCount() < Integer.parseInt(editCount.getText().toString())) {
+                        if (stocks.get(position).getCount() < num) {
                             showOverDialog();
                             dialog.show();
                         } else {
@@ -138,6 +139,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                             num = 1;
                             showDialog();
                         }
+                        cartItems.add(new CartItem(1, stocks.get(position).getProduct(), num, stocks.get(position).getPrice()));
                     }
                 });
             }
@@ -186,6 +188,8 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+                intent.putExtra("marketId", market.getId());
+                intent.putParcelableArrayListExtra("cartItems", cartItems);
                 startActivity(intent);
                 dialog.cancel();
             }

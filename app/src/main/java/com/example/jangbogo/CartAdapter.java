@@ -14,10 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
-    private List<Stock> cartList = new ArrayList<>();
+    private List<CartItem> cartItems = new ArrayList<>();
 
-    public CartAdapter(List<Stock> cartList) {
-        this.cartList = cartList;
+    public CartAdapter(List<CartItem> cartItems) {
+        super();
+        this.cartItems = cartItems;
     }
 
     @NonNull
@@ -32,16 +33,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Stock stock = cartList.get(position);
+        CartItem cartItem = cartItems.get(position);
         //이미지 불러오는 코드 들어가야함
-        holder.txtListName.setText(stock.getProduct().getName());
-        holder.txtListCount.setText(stock.getCount());
-        holder.txtTotal.setText(stock.getPrice() * stock.getCount());
+        holder.txtListName.setText(cartItem.getProduct().getName());
+        holder.txtListCount.setText(Integer.toString(cartItem.getCount()));
+        holder.txtTotal.setText(Integer.toString(cartItem.getPrice() * cartItem.getCount()));
     }
 
     @Override
     public int getItemCount() {
-        return cartList.size();
+        return cartItems.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

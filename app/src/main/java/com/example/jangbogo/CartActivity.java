@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,7 +17,11 @@ public class CartActivity extends AppCompatActivity {
     private Button btnPay, btnBack;
     private RecyclerView recyclerView;
     private CartAdapter cartAdapter;
-    private List<Stock> cartList = new ArrayList<>();
+    private List<CartItem> cartItems = new ArrayList<>();
+    private CartItem cartItem;
+    private TextView txtListName;
+    private TextView txtListCount;
+    private TextView txtTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,8 @@ public class CartActivity extends AppCompatActivity {
 
         btnPay = findViewById(R.id.btnPayment);
         btnBack = findViewById(R.id.btnBack2);
+        cartItems = getIntent().getParcelableArrayListExtra("cartItems");
+        cartAdapter = new CartAdapter(cartItems);
         recyclerView = (RecyclerView)findViewById(R.id.cartRecyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(cartAdapter);
@@ -45,8 +52,4 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
-    public interface itemTouchListener {
-        boolean onItemMove(int position, int toPosition);
-        void onItemSwipe(int position);
-    }
 }
