@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,10 +17,6 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CartAdapter cartAdapter;
     private List<CartItem> cartItems = new ArrayList<>();
-    private CartItem cartItem;
-    private TextView txtListName;
-    private TextView txtListCount;
-    private TextView txtTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

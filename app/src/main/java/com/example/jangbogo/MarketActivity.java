@@ -73,6 +73,8 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CartActivity.class);
+                intent.putExtra("marketId", market.getId());
+                intent.putParcelableArrayListExtra("cartItems", cartItems);
                 startActivity(intent);
 
             }
@@ -86,7 +88,6 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
         });
 
         stockAdapter.setOnItemClickListener(new StockAdapter.OnItemClickListener() {
-            int num = 1;
 
             @Override
             public void onItemClick(View v, int position) {
@@ -102,19 +103,19 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                 Button btnCancle = dialog.findViewById(R.id.btnCancle);
                 Button btnPut = dialog.findViewById(R.id.btnPut);
                 EditText editCount = dialog.findViewById(R.id.editCount);
-                editCount.setText(num+"");
+                editCount.setText("1");
 
                 btnCancle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.cancel();
-                        num = 1;
                     }
                 });
 
                 btnAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int num = Integer.parseInt(editCount.getText().toString());
                         num++;
                         editCount.setText(num+"");
                     }
@@ -123,6 +124,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                 btnSub.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int num = Integer.parseInt(editCount.getText().toString());
                         num--;
                         editCount.setText(num+"");
                     }
@@ -131,15 +133,15 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                 btnPut.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int num = Integer.parseInt(editCount.getText().toString());
                         if (stocks.get(position).getCount() < num) {
                             showOverDialog();
                             dialog.show();
                         } else {
                             dialog.cancel();
-                            num = 1;
+                            cartItems.add(new CartItem(1, stocks.get(position).getProduct(), num, stocks.get(position).getPrice()));
                             showDialog();
                         }
-                        cartItems.add(new CartItem(1, stocks.get(position).getProduct(), num, stocks.get(position).getPrice()));
                     }
                 });
             }

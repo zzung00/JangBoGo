@@ -53,6 +53,7 @@
         android:id="@+id/editCount"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="@+id/btnPut"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.813"
