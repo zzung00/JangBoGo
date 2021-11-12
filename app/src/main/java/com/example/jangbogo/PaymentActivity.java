@@ -1,13 +1,17 @@
 package com.example.jangbogo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class PaymentActivity extends AppCompatActivity {
     private TextView txtOrderList;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +23,27 @@ public class PaymentActivity extends AppCompatActivity {
         txtOrderList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //order액티비티로 넘어가기
+                Intent intent = new Intent(getApplicationContext(), OrderActivity.class);
+                startActivity(intent);
             }
         });
+
+//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.mapPage :
+//                        Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+//                        startActivity(intent);
+//                        break;
+//
+//                    case R.id.orderPage :
+//                        Intent intent1 = new Intent(getApplicationContext(), OrderActivity.class);
+//                        startActivity(intent1);
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
     }
 }

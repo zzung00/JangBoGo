@@ -28,6 +28,7 @@
         <activity android:name=".MarketActivity"></activity>
         <activity android:name=".CartActivity"></activity>
         <activity android:name=".PaymentActivity"></activity>
+        <activity android:name=".OrderActivity"></activity>
 
     </application>
 
