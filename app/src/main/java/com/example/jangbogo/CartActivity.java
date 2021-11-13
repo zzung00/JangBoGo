@@ -24,6 +24,7 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CartAdapter cartAdapter;
     private List<CartItem> cartItems = new ArrayList<>();
+    private ArrayList<OrderItem> orderItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,9 @@ public class CartActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
                     startActivity(intent);
+                    finish();
+                    intent.putParcelableArrayListExtra("orderItems", orderItems);
+                    //putExtra 이용하여 주문내역으로 값 전달
                 }
             }
         });

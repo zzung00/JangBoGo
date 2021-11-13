@@ -148,7 +148,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
         });
 
 
-        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.219.114/").addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(JangBoGoService.class);
         Call<List<Stock>> call = service.loadAllStockByMarketId(market.getId());
         call.enqueue(new Callback<List<Stock>>() {
@@ -194,6 +194,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                 intent.putParcelableArrayListExtra("cartItems", cartItems);
                 startActivity(intent);
                 dialog.cancel();
+                finish();
             }
         });
     }

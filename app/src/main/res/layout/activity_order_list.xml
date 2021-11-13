@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imgMartLogo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_baseline_lens_24" />
+
+    <TextView
+        android:id="@+id/txtMarketLogoName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="복마트"
+        android:fontFamily="@font/m"
+        android:textSize="20dp"
+        android:layout_alignBottom="@id/imgMartLogo"
+        android:layout_alignLeft="@id/imgMartLogo"
+        android:layout_alignRight="@id/imgMartLogo"
+        android:layout_alignTop="@id/imgMartLogo"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/txtMarketName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="15dp"
+        android:textSize="20dp"
+        android:fontFamily="@font/b"
+        android:text="복마트" />
+
+    <TextView
+        android:id="@+id/txtOrderTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="90dp"
+        android:layout_marginTop="50dp"
+        android:textSize="15dp"
+        android:fontFamily="@font/m"
+        android:text="총 25000원"/>
+
+    <TextView
+        android:id="@+id/btnOrderDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="30dp"
+        android:text="주문상세"
+        android:fontFamily="@font/m"
+        android:textColor="@color/deepskyblue"/>
+
+    <View
+        android:layout_width="55dp"
+        android:layout_height="2dp"
+        android:layout_marginLeft="280dp"
+        android:layout_marginTop="45dp"
+        android:background="@color/deepskyblue"/>
+
+<!--    <Button-->
+<!--        android:id="@+id/btnOrderDetail"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:layout_marginLeft="270dp"-->
+<!--        android:text="주문상세"-->
+<!--        android:fontFamily="@font/m"-->
+<!--        android:backgroundTint="@color/deepskyblue"/>-->
+
+</RelativeLayout>

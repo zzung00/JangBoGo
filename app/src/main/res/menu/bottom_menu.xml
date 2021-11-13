@@ -11,7 +11,7 @@
     <item
         android:id="@+id/orderPage"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_shopping_basket_24"
+        android:icon="@drawable/ic_baseline_receipt_24"
         android:iconTint="@color/white"
         android:title="주문내역"/>
 </menu>
