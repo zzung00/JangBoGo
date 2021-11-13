@@ -42,31 +42,14 @@
         android:fontFamily="@font/m"
         android:text="총 25000원"/>
 
-    <TextView
+    <Button
         android:id="@+id/btnOrderDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="280dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="270dp"
         android:text="주문상세"
         android:fontFamily="@font/m"
-        android:textColor="@color/deepskyblue"/>
-
-    <View
-        android:layout_width="55dp"
-        android:layout_height="2dp"
-        android:layout_marginLeft="280dp"
-        android:layout_marginTop="45dp"
-        android:background="@color/deepskyblue"/>
-
-<!--    <Button-->
-<!--        android:id="@+id/btnOrderDetail"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="15dp"-->
-<!--        android:layout_marginLeft="270dp"-->
-<!--        android:text="주문상세"-->
-<!--        android:fontFamily="@font/m"-->
-<!--        android:backgroundTint="@color/deepskyblue"/>-->
+        android:backgroundTint="@color/deepskyblue"/>
 
 </RelativeLayout>

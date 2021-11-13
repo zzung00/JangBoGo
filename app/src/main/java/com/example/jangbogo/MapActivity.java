@@ -11,7 +11,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Adapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +51,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private HashMap<String, Market> markets = new HashMap<>();
     private Retrofit retrofit;
     private JangBoGoService service;
+    private ImageView imgOrderList;
+    private ListView listView;
+    private SearchAdapter searchAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +61,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
         getLocationPermission();
 
+        imgOrderList = findViewById(R.id.imgOrderList);
+        listView = (ListView) findViewById(R.id.listView);
+        searchAdapter = new SearchAdapter();
+        listView.setAdapter(searchAdapter);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -66,6 +76,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 if (location != null) {
                     map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
                 }
+            }
+        });
+
+        imgOrderList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), OrderActivity.class);
+                startActivity(intent);
             }
         });
 
