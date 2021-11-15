@@ -15,16 +15,17 @@ import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
     private ImageButton btnMap;
-    private Market market;
     private List<OrderItem> orderItems = new ArrayList<>();
     private RecyclerView recyclerView;
     private OrderAdapter orderAdapter;
+    private MarketActivity marketActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
+        marketActivity = (MarketActivity) MarketActivity.activity;
         btnMap = (FloatingActionButton) findViewById(R.id.btnMap);
         //market = getIntent().getParcelableExtra("market");
         //orderItems = getIntent().getParcelableArrayListExtra("orderItems");
@@ -37,6 +38,7 @@ public class OrderActivity extends AppCompatActivity {
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                marketActivity.finish();
                 finish();
             }
         });

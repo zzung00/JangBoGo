@@ -1,5 +1,6 @@
 package com.example.jangbogo;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -45,12 +46,14 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
     private RecyclerView recyclerView;
     private StockAdapter stockAdapter;
     private ArrayList<CartItem> cartItems = new ArrayList<>();
+    public static Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market);
 
+        activity = MarketActivity.this;
         market = getIntent().getParcelableExtra("market");
         marketName = findViewById(R.id.marketName);
         marketName.setText(market.getName());
@@ -148,7 +151,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
         });
 
 
-        retrofit = new Retrofit.Builder().baseUrl("http://192.168.219.114/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://172.20.10.3/").addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(JangBoGoService.class);
         Call<List<Stock>> call = service.loadAllStockByMarketId(market.getId());
         call.enqueue(new Callback<List<Stock>>() {
@@ -166,6 +169,11 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     public  void showDialog() {
@@ -192,9 +200,8 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
                 Intent intent = new Intent(getApplicationContext(), CartActivity.class);
                 intent.putExtra("marketId", market.getId());
                 intent.putParcelableArrayListExtra("cartItems", cartItems);
-                startActivity(intent);
                 dialog.cancel();
-                finish();
+                startActivity(intent);
             }
         });
     }
@@ -240,6 +247,10 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
             select.animate().x(size).setDuration(100);
             stockAdapter.getFilter().filter("채소");
         }
+    }
+
+    public ArrayList<CartItem> getCartItems() {
+        return cartItems;
     }
 
 }
