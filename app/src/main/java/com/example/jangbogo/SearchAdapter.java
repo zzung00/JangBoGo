@@ -1,93 +1,33 @@
 package com.example.jangbogo;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
+import android.widget.CursorAdapter;
+import android.widget.SearchView;
 
-import java.util.ArrayList;
+public class SearchAdapter extends CursorAdapter {
+    private LayoutInflater layoutInflater;
+    private Context context;
+    private SearchView searchView;
 
-public class SearchAdapter extends BaseAdapter implements Filterable {
-    private ArrayList<Market> markets = new ArrayList<>();
-    private ArrayList<Market> filteredList = markets;
-    private Filter listFilter;
-
-    public SearchAdapter() {
-
+    public SearchAdapter(Context context, Cursor c, SearchView s) {
+        super(context, c, false);
+        this.context = context;
+        this.searchView = s;
+        this.layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public int getCount() {
-        return filteredList.size();
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        View view = layoutInflater.inflate(R.layout )
+        return null;
     }
 
     @Override
-    public Object getItem(int position) {
-        return filteredList.get(position);
-    }
+    public void bindView(View view, Context context, Cursor cursor) {
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
-        final Context context = parent.getContext();
-
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.activity_map, parent, false);
-        }
-
-        return convertView;
-    }
-
-    @Override
-    public Filter getFilter() {
-        if (listFilter == null) {
-            listFilter = new ListFilter();
-        }
-        return listFilter;
-    }
-
-    private class ListFilter extends Filter {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-
-            if (constraint == null || constraint.length() == 0) {
-                results.values = markets;
-                results.count = markets.size();
-            }else {
-                ArrayList<Market> marketList = new ArrayList<>();
-
-                for (Market m : markets) {
-                    if (m.getName().toUpperCase().contains(constraint.toString().toUpperCase())) {
-                        markets.add(m);
-                    }
-                }
-                results.values = marketList;
-                results.count = marketList.size();
-            }
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredList = (ArrayList<Market>) results.values;
-
-            if (results.count > 0) {
-                notifyDataSetChanged();
-            }else {
-                notifyDataSetInvalidated();
-            }
-        }
     }
 }

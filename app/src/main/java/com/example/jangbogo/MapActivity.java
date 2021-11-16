@@ -61,7 +61,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private JangBoGoService service;
     private ImageView imgOrderList;
     private SearchView searchView;
-    private CursorAdapter cursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         getLocationPermission();
 
         imgOrderList = findViewById(R.id.imgOrderList);
-        searchAdapter = new SearchAdapter();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
