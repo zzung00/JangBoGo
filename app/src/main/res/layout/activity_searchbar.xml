@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/deepskyblue">
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:iconifiedByDefault="true"
+        android:queryHint="마켓 및 상품 입력"/>
+
+    <ImageView
+        android:id="@+id/imgOrderList"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginLeft="280dp"
+        android:src="@drawable/ic_baseline_receipt_long_24" />
+
+</androidx.appcompat.widget.Toolbar>

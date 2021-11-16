@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">JangBoGo</string>
+    <string name="search_hint">마켓 및 상품을 입력하세요</string>
 </resources>

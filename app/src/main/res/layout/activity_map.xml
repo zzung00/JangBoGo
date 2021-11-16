@@ -12,25 +12,13 @@
         android:layout_height="match_parent"
         tools:context=".MapActivity" />
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchBar"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        app:iconifiedByDefault="false"
-        app:queryHint="마켓 및 상품 입력" />
+    <include layout="@layout/activity_searchbar"></include>
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/searchBar"
-        android:textFilterEnabled="true" />
-
-    <ImageView
-        android:id="@+id/imgOrderList"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="320dp"
-        android:src="@drawable/ic_baseline_receipt_long_24" />
+<!--    <androidx.appcompat.widget.SearchView-->
+<!--        android:id="@+id/searchBar"-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:iconifiedByDefault="false"-->
+<!--        app:queryHint="마켓 및 상품 입력" />-->
 
 </RelativeLayout>

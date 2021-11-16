@@ -151,7 +151,7 @@ public class MarketActivity extends AppCompatActivity implements  View.OnClickLi
         });
 
 
-        retrofit = new Retrofit.Builder().baseUrl("http://172.20.10.3/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(JangBoGoService.class);
         Call<List<Stock>> call = service.loadAllStockByMarketId(market.getId());
         call.enqueue(new Callback<List<Stock>>() {

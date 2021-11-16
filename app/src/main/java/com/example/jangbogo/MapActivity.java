@@ -1,19 +1,27 @@
 package com.example.jangbogo;
 
 import android.app.Dialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +41,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -51,8 +60,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private Retrofit retrofit;
     private JangBoGoService service;
     private ImageView imgOrderList;
-    private ListView listView;
-    private SearchAdapter searchAdapter;
+    private SearchView searchView;
+    private CursorAdapter cursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +70,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         getLocationPermission();
 
         imgOrderList = findViewById(R.id.imgOrderList);
-        listView = (ListView) findViewById(R.id.listView);
         searchAdapter = new SearchAdapter();
-        listView.setAdapter(searchAdapter);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -86,7 +93,42 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        retrofit = new Retrofit.Builder().baseUrl("http://172.20.10.3/").addConverterFactory(GsonConverterFactory.create()).build();
+        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setSuggestionsAdapter();
+        searchView.setQueryHint("마켓 및 상품 입력");
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Toast.makeText(getBaseContext(), String.valueOf(hasFocus) +" I am in has focus", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                return false;
+            }
+
+            @Override
+            public boolean onSuggestionClick(int position) {
+                //show dialog
+                return false;
+            }
+        });
+
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(JangBoGoService.class);
 
         Call<List<Market>> call = service.listAllMarket();
@@ -170,5 +212,4 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
     }
-
 }
