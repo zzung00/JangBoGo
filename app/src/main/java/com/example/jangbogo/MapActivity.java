@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,6 +62,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private JangBoGoService service;
     private ImageView imgOrderList;
     private SearchView searchView;
+    private SearchAdapter searchAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +94,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
 
         searchView = (SearchView) findViewById(R.id.searchView);
-        searchView.setSuggestionsAdapter();
+        searchView.setSuggestionsAdapter(searchAdapter);
         searchView.setQueryHint("마켓 및 상품 입력");
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -121,8 +123,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             @Override
             public boolean onSuggestionClick(int position) {
-                //show dialog
-                return false;
+                showDialog(position);
+                return true;
             }
         });
 
