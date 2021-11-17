@@ -14,11 +14,9 @@
 
     <include layout="@layout/activity_searchbar"></include>
 
-<!--    <androidx.appcompat.widget.SearchView-->
-<!--        android:id="@+id/searchBar"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:iconifiedByDefault="false"-->
-<!--        app:queryHint="마켓 및 상품 입력" />-->
+    <View
+        android:id="@+id/dropDown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

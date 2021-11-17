@@ -10,16 +10,24 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchAdapter extends CursorAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
     private SearchView searchView;
+    private List<SearchItem> searchItems = new ArrayList<>();
 
     public SearchAdapter(Context context, Cursor c, SearchView s) {
         super(context, c, false);
         this.context = context;
         this.searchView = s;
         this.layoutInflater = LayoutInflater.from(context);
+    }
+
+    public void setSearchItems(List<SearchItem> searchItems) {
+        this.searchItems = searchItems;
     }
 
     @Override

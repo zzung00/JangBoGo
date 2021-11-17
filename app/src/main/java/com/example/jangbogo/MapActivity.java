@@ -9,27 +9,24 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CursorAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuItemCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -42,7 +39,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,7 +58,57 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private JangBoGoService service;
     private ImageView imgOrderList;
     private SearchView searchView;
-    private SearchAdapter searchAdapter;
+    private AutoCompleteTextView auto;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_item_list, menu);
+        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setQueryHint("마켓 및 상품 입력");
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        MenuItem menuItem = menu.findItem(R.id.searchResultList);
+        searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) { return false;}
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Call<List<SearchItem>> call = service.search(newText);
+                call.enqueue(new Callback<List<SearchItem>>() {
+                    @Override
+                    public void onResponse(Call<List<SearchItem>> call, Response<List<SearchItem>> response) {
+                        if (response.isSuccessful()) {
+                            List<SearchItem> res = response.body();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<SearchItem>> call, Throwable t) {
+
+                    }
+                });
+                return false;
+            }
+        });
+
+        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                return false;
+            }
+
+            @Override
+            public boolean onSuggestionClick(int position) {
+                showDialog(position);
+                return true;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,42 +139,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        searchView = (SearchView) findViewById(R.id.searchView);
-        searchView.setSuggestionsAdapter(searchAdapter);
-        searchView.setQueryHint("마켓 및 상품 입력");
-        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Toast.makeText(getBaseContext(), String.valueOf(hasFocus) +" I am in has focus", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
-        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
-            @Override
-            public boolean onSuggestionSelect(int position) {
-                return false;
-            }
-
-            @Override
-            public boolean onSuggestionClick(int position) {
-                showDialog(position);
-                return true;
-            }
-        });
-
-        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.25.8/").addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(JangBoGoService.class);
 
         Call<List<Market>> call = service.listAllMarket();

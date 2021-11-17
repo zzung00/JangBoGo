@@ -12,4 +12,7 @@ public interface JangBoGoService {
 
     @GET("stock/stocks")
     Call<List<Stock>> loadAllStockByMarketId(@Query("marketId") int id);
+
+    @GET("search/query")
+    Call<List<SearchItem>> search(@Query("query") String query);
 }
