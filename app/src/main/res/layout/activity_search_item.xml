@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:fontFamily="@font/surround"
-        android:textColor="@color/black"
+        android:textColor="@color/deepskyblue"
         android:padding="5dp"
         android:text="복마트"
         android:textSize="15dp" />

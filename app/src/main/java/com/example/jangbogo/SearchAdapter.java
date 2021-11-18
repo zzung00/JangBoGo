@@ -52,15 +52,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             if (searchItem.getStock().getCount() <= 30) {
                 holder.txtPossibility.setText("현재 재고 보유 가능성 낮음");
                 holder.progressBar.setProgress(30);
-                holder.progressBar.getIndeterminateDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-            }else if (searchItem.getStock().getCount() >= 31 || searchItem.getStock().getCount() <= 60){
+                holder.progressBar.getIndeterminateDrawable().setColorFilter(Color.RED, PorterDuff.Mode.MULTIPLY);
+            }else if (searchItem.getStock().getCount() >= 31 && searchItem.getStock().getCount() <= 60){
                 holder.txtPossibility.setText("현재 재고 보유 가능성 있음");
                 holder.progressBar.setProgress(60);
-                holder.progressBar.getIndeterminateDrawable().setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_IN);
+                holder.progressBar.getIndeterminateDrawable().setColorFilter(Color.YELLOW, PorterDuff.Mode.MULTIPLY);
             } else {
                 holder.txtPossibility.setText("현재 재고 보유 가능성 높음");
                 holder.progressBar.setProgress(100);
-                holder.progressBar.getIndeterminateDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+                holder.progressBar.getIndeterminateDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.MULTIPLY);
             }
         }else {
             holder.marketNameInSearch.setTextSize(30);
