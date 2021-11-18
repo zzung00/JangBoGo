@@ -1,6 +1,9 @@
 package com.example.jangbogo;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +26,7 @@ public class SearchResultActivity extends AppCompatActivity {
     private JangBoGoService service;
     private Retrofit retrofit;
     private String query;
+    private ImageView btnBackInSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,24 @@ public class SearchResultActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(searchAdapter);
+        btnBackInSearch = findViewById(R.id.btnBackInSearch);
+
+        btnBackInSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Market market = searchAdapter.getSearchItems().get(position).getMarket();
+                Intent intent = new Intent(getApplicationContext(), MarketActivity.class);
+                intent.putExtra("market", market);
+                startActivity(intent);
+            }
+        });
 
         retrofit = new Retrofit.Builder().baseUrl("http://172.20.10.2/").addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(JangBoGoService.class);

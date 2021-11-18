@@ -27,6 +27,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public void setSearchItems(List<SearchItem> searchItems) {
         this.searchItems = searchItems;
     }
+    public List<SearchItem> getSearchItems() {
+        return searchItems;
+    }
 
     @NonNull
     @Override
@@ -60,8 +63,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 holder.progressBar.getIndeterminateDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
             }
         }else {
-            holder.marketNameInSearch.setTextSize(25);
+            holder.marketNameInSearch.setTextSize(30);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListener listener = null;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -81,6 +94,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             possessName = itemView.findViewById(R.id.possessName);
             txtPossibility = itemView.findViewById(R.id.txtPossbility);
             progressBar = itemView.findViewById(R.id.progressBar);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        SearchItem searchItem = searchItems.get(position);
+                        if (listener != null) {
+                            listener.onItemClick(v, position);
+                        }
+                    }
+                }
+            });
         }
     }
 

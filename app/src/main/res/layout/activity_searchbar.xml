@@ -13,9 +13,9 @@
 
     <ImageView
         android:id="@+id/imgOrderList"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="280dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="300dp"
         android:src="@drawable/ic_baseline_receipt_long_24" />
 
 </androidx.appcompat.widget.Toolbar>
