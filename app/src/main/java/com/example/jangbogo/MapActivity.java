@@ -6,11 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +23,7 @@ import android.view.Window;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,57 +64,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private JangBoGoService service;
     private ImageView imgOrderList;
     private SearchView searchView;
-    private AutoCompleteTextView auto;
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_item_list, menu);
-        searchView = (SearchView) findViewById(R.id.searchView);
-        searchView.setQueryHint("마켓 및 상품 입력");
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        MenuItem menuItem = menu.findItem(R.id.searchResultList);
-        searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) { return false;}
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Call<List<SearchItem>> call = service.search(newText);
-                call.enqueue(new Callback<List<SearchItem>>() {
-                    @Override
-                    public void onResponse(Call<List<SearchItem>> call, Response<List<SearchItem>> response) {
-                        if (response.isSuccessful()) {
-                            List<SearchItem> res = response.body();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<SearchItem>> call, Throwable t) {
-
-                    }
-                });
-                return false;
-            }
-        });
-
-        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
-            @Override
-            public boolean onSuggestionSelect(int position) {
-                return false;
-            }
-
-            @Override
-            public boolean onSuggestionClick(int position) {
-                showDialog(position);
-                return true;
-            }
-        });
-        return super.onCreateOptionsMenu(menu);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +94,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        retrofit = new Retrofit.Builder().baseUrl("http://192.168.25.8/").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://172.20.10.2/").addConverterFactory(GsonConverterFactory.create()).build();
         service = retrofit.create(JangBoGoService.class);
 
         Call<List<Market>> call = service.listAllMarket();

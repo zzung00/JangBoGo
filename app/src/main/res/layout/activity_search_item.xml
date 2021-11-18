@@ -46,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:progress="33" />
-
     </LinearLayout>
 
 </LinearLayout>
