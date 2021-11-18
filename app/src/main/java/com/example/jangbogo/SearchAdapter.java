@@ -16,9 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
+    private Context context;
     private List<SearchItem> searchItems = new ArrayList<>();
 
-    public SearchAdapter(List<SearchItem> searchItems) {
+    public SearchAdapter(Context context, List<SearchItem> searchItems) {
+        this.context = context;
+        this.searchItems = searchItems;
+    }
+
+    public void setSearchItems(List<SearchItem> searchItems) {
         this.searchItems = searchItems;
     }
 
@@ -38,6 +44,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.marketNameInSearch.setText(searchItem.getMarket().getName());
 
         if (searchItem.getStock() != null) {
+            holder.progressBar.setVisibility(View.VISIBLE);
             holder.possessName.setText(searchItem.getStock().getProduct().getName());
             if (searchItem.getStock().getCount() <= 30) {
                 holder.txtPossibility.setText("현재 재고 보유 가능성 낮음");
@@ -52,6 +59,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 holder.progressBar.setProgress(100);
                 holder.progressBar.getIndeterminateDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
             }
+        }else {
+            holder.marketNameInSearch.setTextSize(25);
         }
     }
 
