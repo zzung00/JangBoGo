@@ -35,6 +35,7 @@
         <activity android:name=".CartActivity"></activity>
         <activity android:name=".PaymentActivity"></activity>
         <activity android:name=".OrderActivity"></activity>
+        <activity android:name=".SearchResultActivity"></activity>
 
     </application>
 
