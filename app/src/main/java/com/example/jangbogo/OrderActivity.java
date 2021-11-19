@@ -27,8 +27,6 @@ public class OrderActivity extends AppCompatActivity {
 
         marketActivity = (MarketActivity) MarketActivity.activity;
         btnMap = (FloatingActionButton) findViewById(R.id.btnMap);
-        //market = getIntent().getParcelableExtra("market");
-        //orderItems = getIntent().getParcelableArrayListExtra("orderItems");
         orderAdapter = new OrderAdapter(orderItems);
         recyclerView = (RecyclerView)findViewById(R.id.orderRecyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

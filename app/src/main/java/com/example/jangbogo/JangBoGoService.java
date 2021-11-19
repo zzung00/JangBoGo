@@ -3,7 +3,9 @@ package com.example.jangbogo;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface JangBoGoService {
@@ -15,4 +17,7 @@ public interface JangBoGoService {
 
     @GET("search/query")
     Call<List<SearchItem>> search(@Query("query") String query);
+
+    @POST("pay")
+    Call<Payment> pay(@Body Payment payment);
 }

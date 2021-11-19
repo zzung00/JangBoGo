@@ -20,6 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class CartActivity extends AppCompatActivity {
     private Button btnPay, btnBack;
     private TextView txtTotalPrice;
@@ -27,7 +30,8 @@ public class CartActivity extends AppCompatActivity {
     private CartAdapter cartAdapter;
     private ArrayList<CartItem> cartItems = new ArrayList<>();
     private MarketActivity marketActivity;
-    //private ArrayList<OrderItem> orderItems = new ArrayList<>();
+    private Retrofit retrofit;
+    private JangBoGoService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +60,11 @@ public class CartActivity extends AppCompatActivity {
                 if (cartItems.isEmpty()) {
                     showEmptyDialog();
                 } else {
+                    retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create()).build();
+                    service = retrofit.create(JangBoGoService.class);
                     Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
                     startActivity(intent);
                     finish();
-                    //intent.putParcelableArrayListExtra("orderItems", orderItems);
-                    //putExtra 이용하여 주문내역으로 값 전달
                 }
             }
         });
