@@ -23,4 +23,7 @@ public interface JangBoGoService {
 
     @GET("order/all")
     Call<List<Order>> getAllOrders();
+
+    @GET("order/orderItem")
+    Call<List<OrderItem>> loadOrderItem(@Query("orderId") int id);
 }

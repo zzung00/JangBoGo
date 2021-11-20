@@ -3,6 +3,7 @@ package com.example.jangbogo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class OrderActivity extends AppCompatActivity {
     private MarketActivity marketActivity;
     private Retrofit retrofit;
     private JangBoGoService service;
+    private Button btnOrderDetail;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -52,7 +54,14 @@ public class OrderActivity extends AppCompatActivity {
         recyclerView = (RecyclerView)findViewById(R.id.orderRecyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderAdapter);
+        btnOrderDetail = recyclerView.findViewById(R.id.btnOrderDetail);
 
+        btnOrderDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +86,7 @@ public class OrderActivity extends AppCompatActivity {
                         -> new JsonPrimitive(DateTimeFormatter.ofPattern("HH:mm:ss").format(localTime)))
                 .create();
 
-        retrofit = new Retrofit.Builder().baseUrl("http://172.30.1.58/").addConverterFactory(GsonConverterFactory.create(gson)).build();
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create(gson)).build();
         service = retrofit.create(JangBoGoService.class);
 
         Call<List<Order>> call = service.getAllOrders();

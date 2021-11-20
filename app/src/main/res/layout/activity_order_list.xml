@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="복마트"
         android:fontFamily="@font/m"
-        android:textSize="20dp"
+        android:textSize="17dp"
         android:layout_alignBottom="@id/imgMartLogo"
         android:layout_alignLeft="@id/imgMartLogo"
         android:layout_alignRight="@id/imgMartLogo"

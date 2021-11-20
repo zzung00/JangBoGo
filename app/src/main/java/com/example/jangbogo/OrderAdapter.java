@@ -5,6 +5,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -58,6 +59,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         TextView txtMarketName;
         TextView txtOrderTotal;
         TextView txtOrderDate;
+        Button btnOrderDetail;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,6 +67,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             txtMarketName = itemView.findViewById(R.id.txtMarketName);
             txtOrderTotal = itemView.findViewById(R.id.txtOrderTotal);
             txtOrderDate = itemView.findViewById(R.id.txtOrderDate);
+
         }
     }
 }
