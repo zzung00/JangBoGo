@@ -20,4 +20,7 @@ public interface JangBoGoService {
 
     @POST("market/purchase")
     Call<Order> pay(@Body Cart cart);
+
+    @GET("order/all")
+    Call<List<Order>> getAllOrders();
 }
