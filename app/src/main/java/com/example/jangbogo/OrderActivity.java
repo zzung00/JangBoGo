@@ -15,7 +15,7 @@ import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
     private ImageButton btnMap;
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
     private RecyclerView recyclerView;
     private OrderAdapter orderAdapter;
     private MarketActivity marketActivity;
@@ -25,9 +25,11 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
+
+
         marketActivity = (MarketActivity) MarketActivity.activity;
         btnMap = (FloatingActionButton) findViewById(R.id.btnMap);
-        orderAdapter = new OrderAdapter(orderItems);
+        orderAdapter = new OrderAdapter(orders);
         recyclerView = (RecyclerView)findViewById(R.id.orderRecyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderAdapter);

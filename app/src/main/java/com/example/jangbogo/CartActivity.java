@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,11 +21,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CartActivity extends AppCompatActivity {
     private Button btnPay, btnBack;
+    private int sum = 0;
     private TextView txtTotalPrice;
     private RecyclerView recyclerView;
     private CartAdapter cartAdapter;
@@ -32,6 +37,7 @@ public class CartActivity extends AppCompatActivity {
     private MarketActivity marketActivity;
     private Retrofit retrofit;
     private JangBoGoService service;
+    private Market market;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +45,15 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         marketActivity = (MarketActivity) MarketActivity.activity;
+        market = getIntent().getParcelableExtra("market");
+        cartItems = getIntent().getParcelableArrayListExtra("cartItems");
         txtTotalPrice = findViewById(R.id.txtTotalPrice);
         btnPay = findViewById(R.id.btnPayment);
         btnBack = findViewById(R.id.btnBack2);
-        cartItems = getIntent().getParcelableArrayListExtra("cartItems");
         cartAdapter = new CartAdapter(cartItems);
         recyclerView = (RecyclerView)findViewById(R.id.cartRecyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(cartAdapter);
-        int sum = 0;
 
         for (int i = 0; i < cartItems.size(); i++) {
             sum += cartItems.get(i).getPrice() * cartItems.get(i).getCount();
@@ -60,11 +66,26 @@ public class CartActivity extends AppCompatActivity {
                 if (cartItems.isEmpty()) {
                     showEmptyDialog();
                 } else {
-                    retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create()).build();
+                    retrofit = new Retrofit.Builder().baseUrl("http://172.30.1.58/").addConverterFactory(GsonConverterFactory.create()).build();
                     service = retrofit.create(JangBoGoService.class);
-                    Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
-                    startActivity(intent);
-                    finish();
+                    Cart cart = new Cart(cartAdapter.getItemCount(), sum, cartItems, market);
+                    Call<Order> call = service.pay(cart);
+                    call.enqueue(new Callback<Order>() {
+                        @Override
+                        public void onResponse(Call<Order> call, Response<Order> response) {
+                            if (response.isSuccessful()) {
+                                Order res = response.body();
+                                Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Order> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });

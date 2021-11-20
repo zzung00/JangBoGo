@@ -15,6 +15,7 @@ import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private List<CartItem> cartItems = new ArrayList<>();
+    private Market market;
 
     public CartAdapter(List<CartItem> cartItems) {
         super();
@@ -50,7 +51,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         TextView txtListName;
         TextView txtListCount;
         TextView txtTotal;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

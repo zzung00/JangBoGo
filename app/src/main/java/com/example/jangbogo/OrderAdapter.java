@@ -1,23 +1,26 @@
 package com.example.jangbogo;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
-    public OrderAdapter(List<OrderItem> orderItems) {
+    public OrderAdapter(List<Order> orders) {
         super();
-        this.orderItems = orderItems;
+        this.orders = orders;
     }
 
     @NonNull
@@ -30,28 +33,34 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         return vh;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        OrderItem orderItem = orderItems.get(position);
-        //holder.txtMarketLogoName.setText();
+        Order order = orders.get(position);
+        holder.txtMarketLogoName.setText(order.getMarket().getName());
+        holder.txtMarketName.setText(order.getMarket().getName());
+        holder.txtOrderTotal.setText(order.getTotal());
+        holder.txtOrderDate.setText(order.getDate().format(DateTimeFormatter.ofPattern("yyyy-mm-dd")));
 
     }
 
     @Override
     public int getItemCount() {
-        return orderItems.size();
+        return orders.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtMarketLogoName;
         TextView txtMarketName;
         TextView txtOrderTotal;
+        TextView txtOrderDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtMarketLogoName = itemView.findViewById(R.id.txtMarketLogoName);
             txtMarketName = itemView.findViewById(R.id.txtMarketName);
             txtOrderTotal = itemView.findViewById(R.id.txtOrderTotal);
+            txtOrderDate = itemView.findViewById(R.id.txtOrderDate);
         }
     }
 }

@@ -42,12 +42,22 @@
         android:fontFamily="@font/m"
         android:text="총 25000원"/>
 
+    <TextView
+        android:id="@+id/txtOrderDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="280dp"
+        android:textSize="15dp"
+        android:fontFamily="@font/l"
+        android:text="2021-11-20" />
+
     <Button
         android:id="@+id/btnOrderDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="270dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="280dp"
         android:text="주문상세"
         android:fontFamily="@font/m"
         android:backgroundTint="@color/deepskyblue"/>

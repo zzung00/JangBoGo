@@ -18,6 +18,6 @@ public interface JangBoGoService {
     @GET("search/query")
     Call<List<SearchItem>> search(@Query("query") String query);
 
-    @POST("pay")
-    Call<Payment> pay(@Body Payment payment);
+    @POST("market/purchase")
+    Call<Order> pay(@Body Cart cart);
 }
