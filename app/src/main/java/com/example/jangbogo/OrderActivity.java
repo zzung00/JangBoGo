@@ -86,7 +86,7 @@ public class OrderActivity extends AppCompatActivity {
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
                 if (response.isSuccessful()) {
                     List<Order> res = response.body();
-                    orders.addAll(res);
+                    orderAdapter.setOrders(res);
                     orderAdapter.notifyDataSetChanged();
                 }
             }

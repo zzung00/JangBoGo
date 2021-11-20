@@ -135,7 +135,9 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
+                sum -= cartItems.get(position).getPrice() * cartItems.get(position).getCount();
                 cartItems.remove(position);
+                txtTotalPrice.setText(sum + "");
                 marketActivity.getCartItems().remove(position);
                 cartAdapter.notifyItemRemoved(position);
             }

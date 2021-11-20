@@ -39,9 +39,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         Order order = orders.get(position);
         holder.txtMarketLogoName.setText(order.getMarket().getName());
         holder.txtMarketName.setText(order.getMarket().getName());
-        holder.txtOrderTotal.setText(order.getTotal());
-        holder.txtOrderDate.setText(order.getDate().format(DateTimeFormatter.ofPattern("yyyy-mm-dd")));
+        holder.txtOrderTotal.setText("총 " + String.valueOf(order.getTotal()) + "원");
+        holder.txtOrderDate.setText(order.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
