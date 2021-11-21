@@ -1,6 +1,7 @@
 package com.example.jangbogo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jangbogo.R;
 import com.example.jangbogo.model.Order;
+import com.example.jangbogo.view.OrderDetailActivity;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
     private List<Order> orders = new ArrayList<>();
+    private Context context;
 
     public OrderAdapter(List<Order> orders) {
         super();
@@ -30,7 +33,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.activity_order_list, parent, false);
         OrderAdapter.ViewHolder vh = new OrderAdapter.ViewHolder(view);
@@ -45,6 +48,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         holder.txtMarketName.setText(order.getMarket().getName());
         holder.txtOrderTotal.setText("총 " + String.valueOf(order.getTotal()) + "원");
         holder.txtOrderDate.setText(order.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+        holder.btnOrderDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, OrderDetailActivity.class);
+                intent.putExtra("order", order);
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -70,7 +82,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             txtMarketName = itemView.findViewById(R.id.txtMarketName);
             txtOrderTotal = itemView.findViewById(R.id.txtOrderTotal);
             txtOrderDate = itemView.findViewById(R.id.txtOrderDate);
-
+            btnOrderDetail = itemView.findViewById(R.id.btnOrderDetail);
         }
     }
 }

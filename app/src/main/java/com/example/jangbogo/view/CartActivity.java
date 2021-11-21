@@ -21,30 +21,19 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.jangbogo.service.JangBoGoService;
-import com.example.jangbogo.model.Market;
-import com.example.jangbogo.model.Order;
 import com.example.jangbogo.R;
 import com.example.jangbogo.adapter.CartAdapter;
 import com.example.jangbogo.model.Cart;
 import com.example.jangbogo.model.CartItem;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializer;
+import com.example.jangbogo.model.Market;
+import com.example.jangbogo.model.Order;
+import com.example.jangbogo.service.JangBoGoAPI;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CartActivity extends AppCompatActivity {
     private Button btnPay, btnBack;
@@ -54,8 +43,6 @@ public class CartActivity extends AppCompatActivity {
     private CartAdapter cartAdapter;
     private ArrayList<CartItem> cartItems = new ArrayList<>();
     private MarketActivity marketActivity;
-    private Retrofit retrofit;
-    private JangBoGoService service;
     private Market market;
 
     @Override
@@ -86,26 +73,8 @@ public class CartActivity extends AppCompatActivity {
                 if (cartItems.isEmpty()) {
                     showEmptyDialog();
                 } else {
-
-                    Gson gson = new GsonBuilder()
-                            .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, typeOfT, context)
-                                    -> LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
-                            .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, typeOfT, context)
-                                    -> LocalDate.parse(json.getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                            .registerTypeAdapter(LocalTime.class, (JsonDeserializer<LocalTime>) (json, typeOfT, context)
-                                    -> LocalTime.parse(json.getAsString(), DateTimeFormatter.ofPattern("HH:mm:ss")))
-                            .registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (localDateTime, typeOfT, context)
-                                    -> new JsonPrimitive(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").format(localDateTime)))
-                            .registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>) (localDate, typeOfT, context)
-                                    -> new JsonPrimitive(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(localDate)))
-                            .registerTypeAdapter(LocalTime.class, (JsonSerializer<LocalTime>) (localTime, typeOfT, context)
-                                    -> new JsonPrimitive(DateTimeFormatter.ofPattern("HH:mm:ss").format(localTime)))
-                            .create();
-
-                    retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create(gson)).build();
-                    service = retrofit.create(JangBoGoService.class);
                     Cart cart = new Cart(cartAdapter.getItemCount(), sum, cartItems, market);
-                    Call<Order> call = service.pay(cart);
+                    Call<Order> call = JangBoGoAPI.getInstance().getService().pay(cart);
                     call.enqueue(new Callback<Order>() {
                         @Override
                         public void onResponse(Call<Order> call, Response<Order> response) {

@@ -3,7 +3,6 @@ package com.example.jangbogo.view;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -12,29 +11,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.jangbogo.adapter.OrderAdapter;
 import com.example.jangbogo.R;
+import com.example.jangbogo.adapter.OrderAdapter;
 import com.example.jangbogo.model.Order;
-import com.example.jangbogo.service.JangBoGoService;
+import com.example.jangbogo.service.JangBoGoAPI;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializer;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OrderActivity extends AppCompatActivity {
     private ImageButton btnMap;
@@ -42,9 +30,6 @@ public class OrderActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private OrderAdapter orderAdapter;
     private MarketActivity marketActivity;
-    private Retrofit retrofit;
-    private JangBoGoService service;
-    private Button btnOrderDetail;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -58,14 +43,6 @@ public class OrderActivity extends AppCompatActivity {
         recyclerView = (RecyclerView)findViewById(R.id.orderRecyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderAdapter);
-        btnOrderDetail = recyclerView.findViewById(R.id.btnOrderDetail);
-
-        btnOrderDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,25 +52,7 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, typeOfT, context)
-                        -> LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
-                .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, typeOfT, context)
-                        -> LocalDate.parse(json.getAsString(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                .registerTypeAdapter(LocalTime.class, (JsonDeserializer<LocalTime>) (json, typeOfT, context)
-                        -> LocalTime.parse(json.getAsString(), DateTimeFormatter.ofPattern("HH:mm:ss")))
-                .registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (localDateTime, typeOfT, context)
-                        -> new JsonPrimitive(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss").format(localDateTime)))
-                .registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>) (localDate, typeOfT, context)
-                        -> new JsonPrimitive(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(localDate)))
-                .registerTypeAdapter(LocalTime.class, (JsonSerializer<LocalTime>) (localTime, typeOfT, context)
-                        -> new JsonPrimitive(DateTimeFormatter.ofPattern("HH:mm:ss").format(localTime)))
-                .create();
-
-        retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create(gson)).build();
-        service = retrofit.create(JangBoGoService.class);
-
-        Call<List<Order>> call = service.getAllOrders();
+        Call<List<Order>> call = JangBoGoAPI.getInstance().getService().getAllOrders();
         call.enqueue(new Callback<List<Order>>() {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
