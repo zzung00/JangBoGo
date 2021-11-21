@@ -1,12 +1,14 @@
 package com.example.jangbogo.service;
 
+import com.example.jangbogo.model.Cart;
 import com.example.jangbogo.model.Market;
 import com.example.jangbogo.model.Order;
 import com.example.jangbogo.model.OrderItem;
 import com.example.jangbogo.model.SearchItem;
 import com.example.jangbogo.model.Stock;
-import com.example.jangbogo.model.Cart;
+import com.example.jangbogo.model.User;
 
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,4 +35,10 @@ public interface JangBoGoService {
 
     @GET("order/orderItem")
     Call<List<OrderItem>> loadOrderItem(@Query("orderId") int id);
+
+    @POST("user/signup")
+    Call<User> signUp(@Body HashMap<String, Object> request);
+
+    @GET("user/signin")
+    Call<User> signIn(@Query("username") String username, @Query("password") String password);
 }
