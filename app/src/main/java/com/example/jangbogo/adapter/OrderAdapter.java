@@ -1,4 +1,4 @@
-package com.example.jangbogo;
+package com.example.jangbogo.adapter;
 
 import android.content.Context;
 import android.os.Build;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.jangbogo.R;
+import com.example.jangbogo.model.Order;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

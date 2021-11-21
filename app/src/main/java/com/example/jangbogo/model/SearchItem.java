@@ -1,4 +1,4 @@
-package com.example.jangbogo;
+package com.example.jangbogo.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -15,7 +15,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBTm5X0wDUSk9fUl-Xrff24hfzQaszzArY" />
 
-        <activity android:name=".SplashActivity">
+        <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,20 +23,20 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".MapActivity">
+        <activity android:name=".view.LoginActivity"></activity>
+        <activity android:name=".view.MapActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
             <meta-data android:name="android.app.searchable"
                     android:resource="@xml/searchable"/>
         </activity>
-        <activity android:name=".MarketActivity"></activity>
-        <activity android:name=".CartActivity"></activity>
-        <activity android:name=".PaymentActivity"></activity>
-        <activity android:name=".OrderActivity"></activity>
-        <activity android:name=".SearchResultActivity"></activity>
-        <activity android:name=".OrderDetailActivity"></activity>
+        <activity android:name=".view.MarketActivity"></activity>
+        <activity android:name=".view.CartActivity"></activity>
+        <activity android:name=".view.PaymentActivity"></activity>
+        <activity android:name=".view.OrderActivity"></activity>
+        <activity android:name=".view.SearchResultActivity"></activity>
+        <activity android:name=".view.OrderDetailActivity"></activity>
 
     </application>
 

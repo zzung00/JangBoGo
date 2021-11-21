@@ -1,4 +1,4 @@
-package com.example.jangbogo;
+package com.example.jangbogo.view;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -24,6 +24,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.jangbogo.model.Market;
+import com.example.jangbogo.R;
+import com.example.jangbogo.service.JangBoGoService;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -184,7 +187,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Market market = markets.get(id);
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.activity_dialog);
+        dialog.setContentView(R.layout.market_info_dialog);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, 700);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setGravity(Gravity.BOTTOM);

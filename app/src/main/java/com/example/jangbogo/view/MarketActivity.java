@@ -1,4 +1,4 @@
-package com.example.jangbogo;
+package com.example.jangbogo.view;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -23,6 +23,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.jangbogo.R;
+import com.example.jangbogo.model.Stock;
+import com.example.jangbogo.adapter.StockAdapter;
+import com.example.jangbogo.model.CartItem;
+import com.example.jangbogo.model.Market;
+import com.example.jangbogo.service.JangBoGoService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;

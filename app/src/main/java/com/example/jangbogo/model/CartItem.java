@@ -1,30 +1,30 @@
-package com.example.jangbogo;
+package com.example.jangbogo.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class OrderItem implements Parcelable {
+public class CartItem implements Parcelable {
     private Integer id;
+    private Product product;
     private int count;
     private int price;
-    private Product product;
 
-    public OrderItem(Integer id, int count, int price, Product product) {
+    public CartItem(Integer id, Product product, int count, int price) {
         this.id = id;
+        this.product = product;
         this.count = count;
         this.price = price;
-        this.product = product;
     }
 
-    protected OrderItem(Parcel in) {
+    protected CartItem(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
         } else {
             id = in.readInt();
         }
+        product = in.readParcelable(Product.class.getClassLoader());
         count = in.readInt();
         price = in.readInt();
-        product = in.readParcelable(Product.class.getClassLoader());
     }
 
     @Override
@@ -35,9 +35,9 @@ public class OrderItem implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(id);
         }
+        dest.writeParcelable(product, flags);
         dest.writeInt(count);
         dest.writeInt(price);
-        dest.writeParcelable(product, flags);
     }
 
     @Override
@@ -45,15 +45,15 @@ public class OrderItem implements Parcelable {
         return 0;
     }
 
-    public static final Creator<OrderItem> CREATOR = new Creator<OrderItem>() {
+    public static final Creator<CartItem> CREATOR = new Creator<CartItem>() {
         @Override
-        public OrderItem createFromParcel(Parcel in) {
-            return new OrderItem(in);
+        public CartItem createFromParcel(Parcel in) {
+            return new CartItem(in);
         }
 
         @Override
-        public OrderItem[] newArray(int size) {
-            return new OrderItem[size];
+        public CartItem[] newArray(int size) {
+            return new CartItem[size];
         }
     };
 
@@ -63,6 +63,14 @@ public class OrderItem implements Parcelable {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 
     public void setCount(int count) {
@@ -81,11 +89,4 @@ public class OrderItem implements Parcelable {
         return price;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
 }

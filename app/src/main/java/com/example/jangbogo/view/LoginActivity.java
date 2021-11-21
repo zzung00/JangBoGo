@@ -1,4 +1,4 @@
-package com.example.jangbogo;
+package com.example.jangbogo.view;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.jangbogo.R;
 
 public class LoginActivity extends AppCompatActivity {
     Button btnLogin;

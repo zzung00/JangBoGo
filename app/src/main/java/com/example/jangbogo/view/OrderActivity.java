@@ -1,10 +1,10 @@
-package com.example.jangbogo;
+package com.example.jangbogo.view;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -12,6 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.jangbogo.adapter.OrderAdapter;
+import com.example.jangbogo.R;
+import com.example.jangbogo.model.Order;
+import com.example.jangbogo.service.JangBoGoService;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
@@ -31,44 +36,42 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SearchResultActivity extends AppCompatActivity {
+public class OrderActivity extends AppCompatActivity {
+    private ImageButton btnMap;
+    private List<Order> orders = new ArrayList<>();
     private RecyclerView recyclerView;
-    private SearchAdapter searchAdapter;
-    private List<SearchItem> searchItems = new ArrayList<>();
-    private JangBoGoService service;
+    private OrderAdapter orderAdapter;
+    private MarketActivity marketActivity;
     private Retrofit retrofit;
-    private String query;
-    private ImageView btnBackInSearch;
+    private JangBoGoService service;
+    private Button btnOrderDetail;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_result);
+        setContentView(R.layout.activity_order);
 
-        query = getIntent().getStringExtra("query");
-        recyclerView = (RecyclerView) findViewById(R.id.searchRecyclerView);
-        searchAdapter = new SearchAdapter(getApplicationContext(), searchItems);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(searchAdapter);
-        btnBackInSearch = findViewById(R.id.btnBackInSearch);
+        marketActivity = (MarketActivity) MarketActivity.activity;
+        btnMap = (FloatingActionButton) findViewById(R.id.btnMap);
+        orderAdapter = new OrderAdapter(orders);
+        recyclerView = (RecyclerView)findViewById(R.id.orderRecyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(orderAdapter);
+        btnOrderDetail = recyclerView.findViewById(R.id.btnOrderDetail);
 
-        btnBackInSearch.setOnClickListener(new View.OnClickListener() {
+        btnOrderDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
             }
         });
 
-        searchAdapter.setOnItemClickListener(new SearchAdapter.OnItemClickListener() {
+        btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(View v, int position) {
-                Market market = searchAdapter.getSearchItems().get(position).getMarket();
-                Intent intent = new Intent(getApplicationContext(), MarketActivity.class);
-                intent.putExtra("market", market);
-                startActivity(intent);
+            public void onClick(View v) {
+                marketActivity.finish();
+                finish();
             }
         });
 
@@ -90,21 +93,21 @@ public class SearchResultActivity extends AppCompatActivity {
         retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.2/").addConverterFactory(GsonConverterFactory.create(gson)).build();
         service = retrofit.create(JangBoGoService.class);
 
-        Call<List<SearchItem>> call = service.search(query);
-        call.enqueue(new Callback<List<SearchItem>>() {
+        Call<List<Order>> call = service.getAllOrders();
+        call.enqueue(new Callback<List<Order>>() {
             @Override
-            public void onResponse(Call<List<SearchItem>> call, Response<List<SearchItem>> response) {
+            public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
                 if (response.isSuccessful()) {
-                    List<SearchItem> res = response.body();
-                    searchAdapter.setSearchItems(res);
-                    searchAdapter.notifyDataSetChanged();
+                    List<Order> res = response.body();
+                    orderAdapter.setOrders(res);
+                    orderAdapter.notifyDataSetChanged();
                 }
             }
+
             @Override
-            public void onFailure(Call<List<SearchItem>> call, Throwable t) {
+            public void onFailure(Call<List<Order>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

@@ -1,8 +1,10 @@
-package com.example.jangbogo;
+package com.example.jangbogo.view;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.jangbogo.R;
 
 public class OrderDetailActivity extends AppCompatActivity {
 

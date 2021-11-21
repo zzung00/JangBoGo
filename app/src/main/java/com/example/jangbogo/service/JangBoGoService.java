@@ -1,4 +1,11 @@
-package com.example.jangbogo;
+package com.example.jangbogo.service;
+
+import com.example.jangbogo.model.Market;
+import com.example.jangbogo.model.Order;
+import com.example.jangbogo.model.OrderItem;
+import com.example.jangbogo.model.SearchItem;
+import com.example.jangbogo.model.Stock;
+import com.example.jangbogo.model.Cart;
 
 import java.util.List;
 

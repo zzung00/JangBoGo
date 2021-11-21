@@ -1,4 +1,4 @@
-package com.example.jangbogo;
+package com.example.jangbogo.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.jangbogo.model.Market;
+import com.example.jangbogo.R;
+import com.example.jangbogo.model.CartItem;
 
 import java.util.ArrayList;
 import java.util.List;

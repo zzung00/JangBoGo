@@ -1,4 +1,4 @@
-package com.example.jangbogo;
+package com.example.jangbogo.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.jangbogo.R;
+import com.example.jangbogo.view.MapActivity;
+import com.example.jangbogo.view.OrderActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class PaymentActivity extends AppCompatActivity {

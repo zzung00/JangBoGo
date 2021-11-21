@@ -1,4 +1,6 @@
-package com.example.jangbogo;
+package com.example.jangbogo.model;
+
+import com.example.jangbogo.model.Product;
 
 public class Stock {
     private Integer id;
