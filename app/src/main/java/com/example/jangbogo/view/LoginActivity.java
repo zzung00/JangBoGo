@@ -7,8 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,13 +15,8 @@ import com.example.jangbogo.R;
 
 public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
-    Button btnSignUp;
+    TextView btnSignUp;
     Dialog dialog;
-    RadioGroup rbGroup;
-//    RadioButton rbUser;
-//    RadioButton rbMarket;
-    TextView txtMcode;
-    EditText editMcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
-        btnSignUp = (Button) findViewById(R.id.btnSignup);
-        rbGroup = (RadioGroup) findViewById(R.id.rgGroup);
-        txtMcode = (TextView) findViewById(R.id.txtMcode);
-        editMcode = (EditText) findViewById(R.id.editMcode);
+        btnSignUp = (TextView) findViewById(R.id.txtSignUp);
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.activity_join);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
