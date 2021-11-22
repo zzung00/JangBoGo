@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class JangBoGoAPI {
     private static JangBoGoAPI instance = null;
     private static JangBoGoService service;
-    private static final String baseUrl = "http://172.30.1.58/";
+    private static final String baseUrl = "http://192.168.0.2/";
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private JangBoGoAPI() {
